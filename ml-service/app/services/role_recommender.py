@@ -1,125 +1,26 @@
+import json
+from pathlib import Path
 from typing import Any
 
+DATA_FILE = (
+    Path(__file__).resolve().parent.parent
+    / "data"
+    / "role_skills.json"
+)
 
-# Initial role-skill knowledge base.
-# We will expand and refine this later using real job-market data.
-ROLE_DATABASE: dict[str, dict[str, Any]] = {
-    "Full Stack Developer": {
-        "category": "Software Development",
-        "skills": {
-            "javascript": 3,
-            "typescript": 2,
-            "react": 3,
-            "node.js": 3,
-            "express": 2,
-            "mongodb": 2,
-            "sql": 2,
-            "git": 1,
-            "github": 1,
-            "docker": 1,
-        },
-    },
 
-    "Backend Developer": {
-        "category": "Software Development",
-        "skills": {
-            "python": 3,
-            "java": 3,
-            "node.js": 3,
-            "express": 2,
-            "fastapi": 2,
-            "django": 2,
-            "mongodb": 2,
-            "mysql": 2,
-            "postgresql": 2,
-            "sql": 3,
-            "git": 1,
-            "docker": 1,
-        },
-    },
+def load_role_database() -> dict[str, dict[str, Any]]:
+    """
+    Load career role definitions from the JSON dataset.
+    """
 
-    "Frontend Developer": {
-        "category": "Software Development",
-        "skills": {
-            "javascript": 3,
-            "typescript": 3,
-            "react": 3,
-            "git": 1,
-            "github": 1,
-        },
-    },
-
-    "DevOps Engineer": {
-        "category": "Cloud & DevOps",
-        "skills": {
-            "linux": 3,
-            "docker": 3,
-            "kubernetes": 3,
-            "aws": 3,
-            "azure": 2,
-            "google cloud": 2,
-            "git": 1,
-            "github": 1,
-        },
-    },
-
-    "Cloud Engineer": {
-        "category": "Cloud & DevOps",
-        "skills": {
-            "linux": 3,
-            "aws": 3,
-            "azure": 3,
-            "google cloud": 3,
-            "docker": 2,
-            "kubernetes": 2,
-            "git": 1,
-        },
-    },
-
-    "Machine Learning Engineer": {
-        "category": "Artificial Intelligence",
-        "skills": {
-            "python": 3,
-            "machine learning": 3,
-            "scikit-learn": 3,
-            "pandas": 2,
-            "numpy": 2,
-            "tensorflow": 2,
-            "pytorch": 2,
-            "git": 1,
-            "docker": 1,
-        },
-    },
-
-    "Data Scientist": {
-        "category": "Data Science",
-        "skills": {
-            "python": 3,
-            "sql": 3,
-            "machine learning": 3,
-            "pandas": 3,
-            "numpy": 2,
-            "scikit-learn": 2,
-            "statistics": 3,
-            "data visualization": 2,
-        },
-    },
-
-    "AI Engineer": {
-        "category": "Artificial Intelligence",
-        "skills": {
-            "python": 3,
-            "machine learning": 3,
-            "deep learning": 3,
-            "natural language processing": 3,
-            "pytorch": 3,
-            "tensorflow": 2,
-            "docker": 1,
-            "git": 1,
-        },
-    },
-}
-
+    with open(
+        DATA_FILE,
+        "r",
+        encoding="utf-8",
+    ) as file:
+        return json.load(file)
+    
 
 def calculate_role_match(
     candidate_skills: list[str],
@@ -177,12 +78,15 @@ def recommend_roles(
     candidate_skills: list[str],
 ) -> list[dict]:
     """
-    Recommend career roles using weighted skill matching.
+    Recommend career roles using the role dataset
+    and weighted skill matching.
     """
+
+    role_database = load_role_database()
 
     recommendations = []
 
-    for role_name, role_data in ROLE_DATABASE.items():
+    for role_name, role_data in role_database.items():
 
         match = calculate_role_match(
             candidate_skills=candidate_skills,
