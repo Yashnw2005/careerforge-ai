@@ -23,65 +23,190 @@ def load_evaluation_dataset() -> list[dict]:
 
 
 def evaluate_role_recommendations() -> None:
-    """Evaluate role recommendations against expected roles."""
+    """Evaluate role recommendations using ranking metrics."""
 
     dataset = load_evaluation_dataset()
 
     total_candidates = len(dataset)
+
     top_1_correct = 0
     top_3_correct = 0
 
+    reciprocal_ranks = []
+    preferred_role_ranks = []
+
     print("\nCareerForge Role Recommendation Evaluation")
-    print("=" * 60)
+    print("=" * 70)
 
     for candidate in dataset:
+
+        # ---------------------------------
+        # Generate recommendations
+        # ---------------------------------
+
         recommendations = recommend_roles(
-            candidate["skills"]
+            candidate_skills=candidate["skills"],
+            candidate_profile=candidate["profile"],
         )
+
+        # ---------------------------------
+        # Expected roles and priorities
+        # ---------------------------------
+
+        expected_roles = candidate["expected_roles"]
+
+        preferred_role = max(
+            expected_roles,
+            key=expected_roles.get,
+        )
+
+        # ---------------------------------
+        # Predicted roles
+        # ---------------------------------
 
         predicted_roles = [
             recommendation["role"]
             for recommendation in recommendations
         ]
 
-        expected_roles = candidate["expected_roles"]
+        # ---------------------------------
+        # Top-1
+        # ---------------------------------
 
         top_1_prediction = predicted_roles[0]
 
         top_1_match = (
-            top_1_prediction in expected_roles
+            top_1_prediction == preferred_role
         )
+
+        if top_1_match:
+            top_1_correct += 1
+
+        # ---------------------------------
+        # Top-3
+        # ---------------------------------
 
         top_3_match = any(
             role in expected_roles
             for role in predicted_roles[:3]
         )
 
-        if top_1_match:
-            top_1_correct += 1
-
         if top_3_match:
             top_3_correct += 1
+
+        # ---------------------------------
+        # Standard MRR
+        # ---------------------------------
+
+        reciprocal_rank = 0.0
+
+        for rank, role in enumerate(
+            predicted_roles,
+            start=1,
+        ):
+            if role in expected_roles:
+                reciprocal_rank = 1 / rank
+                break
+
+        reciprocal_ranks.append(
+            reciprocal_rank
+        )
+
+        # ---------------------------------
+        # Preferred-role rank
+        # ---------------------------------
+
+        preferred_rank = None
+
+        for rank, role in enumerate(
+            predicted_roles,
+            start=1,
+        ):
+            if role == preferred_role:
+                preferred_rank = rank
+                break
+
+        if preferred_rank is not None:
+            preferred_role_ranks.append(
+                preferred_rank
+            )
+
+        # ---------------------------------
+        # Display candidate information
+        # ---------------------------------
 
         print(
             f"\n{candidate['candidate_id']}"
         )
 
-        print(
-            f"Expected roles: {', '.join(expected_roles)}"
+        expected_display = ", ".join(
+            f"{role} (priority {priority})"
+            for role, priority
+            in expected_roles.items()
         )
 
         print(
-            f"Predicted top role: {top_1_prediction}"
+            f"Expected roles: "
+            f"{expected_display}"
         )
 
         print(
-            f"Top-1: {'PASS' if top_1_match else 'FAIL'}"
+            f"Preferred role: "
+            f"{preferred_role}"
+        )
+
+        # ---------------------------------
+        # Display ranking
+        # ---------------------------------
+
+        print("\nPredicted ranking:")
+
+        for rank, recommendation in enumerate(
+            recommendations,
+            start=1,
+        ):
+            print(
+                f"  {rank}. "
+                f"{recommendation['role']} "
+                f"— "
+                f"{recommendation['match_percentage']:.2f}% "
+                f"(skills: "
+                f"{recommendation['skill_match_percentage']:.2f}%, "
+                f"semantic: "
+                f"{recommendation['semantic_match_percentage']:.2f}%)"
+            )
+
+        # ---------------------------------
+        # Display evaluation results
+        # ---------------------------------
+
+        print(
+            f"\nTop-1: "
+            f"{'PASS' if top_1_match else 'FAIL'}"
         )
 
         print(
-            f"Top-3: {'PASS' if top_3_match else 'FAIL'}"
+            f"Top-3: "
+            f"{'PASS' if top_3_match else 'FAIL'}"
         )
+
+        print(
+            f"First relevant role rank: "
+            f"{1 / reciprocal_rank:.0f}"
+            if reciprocal_rank > 0
+            else "First relevant role rank: N/A"
+        )
+
+        print(
+            f"Preferred role rank: "
+            f"{preferred_rank}"
+            if preferred_rank is not None
+            else "Preferred role rank: N/A"
+        )
+
+    # ---------------------------------
+    # Final metrics
+    # ---------------------------------
 
     top_1_accuracy = (
         top_1_correct / total_candidates
@@ -91,20 +216,49 @@ def evaluate_role_recommendations() -> None:
         top_3_correct / total_candidates
     ) * 100
 
-    print("\n" + "=" * 60)
+    mean_reciprocal_rank = (
+        sum(reciprocal_ranks)
+        / total_candidates
+    )
+
+    average_preferred_rank = (
+        sum(preferred_role_ranks)
+        / len(preferred_role_ranks)
+        if preferred_role_ranks
+        else 0
+    )
+
+    # ---------------------------------
+    # Evaluation summary
+    # ---------------------------------
+
+    print("\n" + "=" * 70)
     print("Evaluation Summary")
-    print("=" * 60)
+    print("=" * 70)
 
     print(
-        f"Candidates evaluated: {total_candidates}"
+        f"Candidates evaluated: "
+        f"{total_candidates}"
     )
 
     print(
-        f"Top-1 Accuracy: {top_1_accuracy:.2f}%"
+        f"Top-1 Accuracy: "
+        f"{top_1_accuracy:.2f}%"
     )
 
     print(
-        f"Top-3 Recall: {top_3_recall:.2f}%"
+        f"Top-3 Recall: "
+        f"{top_3_recall:.2f}%"
+    )
+
+    print(
+        f"Mean Reciprocal Rank (MRR): "
+        f"{mean_reciprocal_rank:.4f}"
+    )
+
+    print(
+        f"Average Preferred Role Rank: "
+        f"{average_preferred_rank:.2f}"
     )
 
 
