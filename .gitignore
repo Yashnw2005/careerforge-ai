@@ -22,3 +22,12 @@ Thumbs.db
 
 # IDE
 .vscode/
+
+# Python virtual environment
+ml-service/venv/
+
+# Python cache
+ml-service/__pycache__/
+ml-service/app/__pycache__/
+ml-service/app/*/__pycache__/
+*.py[cod]
