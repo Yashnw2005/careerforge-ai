@@ -8,6 +8,7 @@ from app.services.pdf_extractor import extract_text_from_pdf
 from app.services.job_matcher import calculate_match_score
 from app.services.resume_analyzer import analyze_resume_against_job
 from app.services.skill_gap import analyze_skill_gaps
+from app.services.semantic_matcher import calculate_semantic_similarity
 
 app = FastAPI(
     title="CareerForge AI ML Service",
@@ -26,7 +27,11 @@ class JobMatchRequest(BaseModel):
     resume_skills: list[str]
     required_skills: list[str]
 
-
+class SemanticMatchRequest(BaseModel):
+    resume_text: str
+    job_description: str
+    
+    
 @app.get("/")
 def root():
     return {
@@ -156,4 +161,20 @@ def analyze_skill_gap(skills: list[str]):
     return {
         "success": True,
         "skill_gaps": recommendations,
+    }
+    
+@app.post("/api/semantic-match")
+def semantic_match(request: SemanticMatchRequest):
+    similarity = calculate_semantic_similarity(
+        resume_text=request.resume_text,
+        job_description=request.job_description,
+    )
+
+    return {
+        "success": True,
+        "semantic_similarity": similarity,
+        "semantic_match_percentage": round(
+            similarity * 100,
+            2,
+        ),
     }

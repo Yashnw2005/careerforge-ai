@@ -35,20 +35,30 @@ def analyze_resume_against_job(
     return {
         "resume_text_length": len(resume_text),
         "resume_skills": resume_skills,
+
         "overall_match_percentage": match_result[
             "overall_match_percentage"
         ],
+
         "text_similarity": match_result[
             "text_similarity"
         ],
+
+        "semantic_similarity": match_result[
+            "semantic_similarity"
+        ],
+
         "skill_match_percentage": match_result[
             "skill_match_percentage"
         ],
+
         "matched_skills": match_result[
             "matched_skills"
         ],
+
         "missing_skills": match_result[
             "missing_skills"
         ],
+
         "skill_gap_analysis": skill_gap,
     }

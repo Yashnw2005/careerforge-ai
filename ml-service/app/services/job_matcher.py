@@ -1,5 +1,6 @@
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+from app.services.semantic_matcher import calculate_semantic_similarity
 
 
 def calculate_text_similarity(
@@ -70,7 +71,6 @@ def calculate_skill_match(
         ),
     }
 
-
 def calculate_match_score(
     resume_text: str,
     job_description: str,
@@ -78,43 +78,53 @@ def calculate_match_score(
     required_skills: list[str],
 ) -> dict:
     """
-    Calculate the overall candidate-job match.
+    Calculate the overall candidate-job match
+    using skill, TF-IDF, and semantic similarity.
     """
 
+    # 1. TF-IDF similarity
     text_similarity = calculate_text_similarity(
         resume_text,
         job_description,
     )
 
+    # 2. Explicit skill matching
     skill_analysis = calculate_skill_match(
         resume_skills,
         required_skills,
     )
 
+    # 3. Semantic similarity
+    semantic_similarity = calculate_semantic_similarity(
+        resume_text,
+        job_description,
+    )
+
     text_score = text_similarity * 100
+    semantic_score = semantic_similarity * 100
     skill_score = skill_analysis[
         "skill_match_percentage"
     ]
 
+    # Initial explainable weighting
     overall_score = (
-        (text_score * 0.4)
-        + (skill_score * 0.6)
+        (skill_score * 0.50)
+        + (semantic_score * 0.30)
+        + (text_score * 0.20)
     )
 
     return {
-        "overall_match_percentage": round(
-            overall_score,
-            2,
-        ),
-        "text_similarity": round(
-            text_similarity,
-            4,
-        ),
-        "skill_match_percentage": skill_score,
-        "matched_skills": skill_analysis[
-            "matched_skills"
-        ],
-        "missing_skills": skill_analysis[
-            "missing_skills"
-        ],
-    }
+    "overall_match_percentage": round(
+        overall_score,
+        2,
+    ),
+    "text_similarity": text_similarity,
+    "semantic_similarity": semantic_similarity,
+    "skill_match_percentage": skill_score,
+    "matched_skills": skill_analysis[
+        "matched_skills"
+    ],
+    "missing_skills": skill_analysis[
+        "missing_skills"
+    ],
+}
