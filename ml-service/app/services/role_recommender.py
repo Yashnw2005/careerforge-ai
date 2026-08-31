@@ -1,6 +1,7 @@
 import json
 from pathlib import Path
 from typing import Any
+from app.services.semantic_matcher import calculate_semantic_similarity
 
 DATA_FILE = (
     Path(__file__).resolve().parent.parent
@@ -74,12 +75,27 @@ def calculate_role_match(
         "total_weight": total_weight,
     }
 
+def calculate_role_semantic_match(
+    candidate_profile: str,
+    role_description: str,
+) -> float:
+    """
+    Calculate semantic similarity between the candidate
+    profile and a career role description.
+    """
+
+    return calculate_semantic_similarity(
+        candidate_profile,
+        role_description,
+    )
+    
 def recommend_roles(
     candidate_skills: list[str],
+    candidate_profile: str = "",
 ) -> list[dict]:
     """
-    Recommend career roles using the role dataset
-    and weighted skill matching.
+    Recommend career roles using weighted skill matching
+    and semantic similarity.
     """
 
     role_database = load_role_database()
@@ -88,18 +104,49 @@ def recommend_roles(
 
     for role_name, role_data in role_database.items():
 
+        # Weighted skill matching
         match = calculate_role_match(
             candidate_skills=candidate_skills,
             role_skills=role_data["skills"],
         )
 
+        # Semantic matching
+        semantic_similarity = 0.0
+
+        if candidate_profile.strip():
+            semantic_similarity = calculate_role_semantic_match(
+                candidate_profile,
+                role_data["description"],
+            )
+
+        semantic_match_percentage = round(
+            semantic_similarity * 100,
+            2,
+        )
+
+        # Combine the two signals
+        skill_score = match["match_percentage"]
+
+        if candidate_profile.strip():
+            final_score = (
+                (skill_score * 0.70)
+                + (semantic_match_percentage * 0.30)
+            )
+        else:
+            final_score = skill_score
+
         recommendations.append(
             {
                 "role": role_name,
                 "category": role_data["category"],
-                "match_percentage": match[
-                    "match_percentage"
-                ],
+                "match_percentage": round(
+                    final_score,
+                    2,
+                ),
+                "skill_match_percentage": skill_score,
+                "semantic_match_percentage": (
+                    semantic_match_percentage
+                ),
                 "matched_skills": match[
                     "matched_skills"
                 ],
