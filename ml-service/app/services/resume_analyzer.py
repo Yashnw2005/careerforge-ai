@@ -2,7 +2,7 @@ from app.services.pdf_extractor import extract_text_from_pdf
 from app.services.skill_extractor import extract_skills
 from app.services.job_matcher import calculate_match_score
 from app.services.skill_gap import analyze_skill_gaps
-
+from app.services.role_recommender import recommend_roles
 
 def analyze_resume_against_job(
     pdf_path: str,
@@ -31,6 +31,11 @@ def analyze_resume_against_job(
     skill_gap = analyze_skill_gaps(
         match_result["missing_skills"]
     )
+    
+    # 5. Recommend suitable career roles
+    career_recommendations = recommend_roles(
+    resume_skills
+)
 
     return {
         "resume_text_length": len(resume_text),
@@ -61,4 +66,6 @@ def analyze_resume_against_job(
         ],
 
         "skill_gap_analysis": skill_gap,
+        
+        "career_recommendations": career_recommendations,
     }

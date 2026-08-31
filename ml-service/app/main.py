@@ -9,6 +9,7 @@ from app.services.job_matcher import calculate_match_score
 from app.services.resume_analyzer import analyze_resume_against_job
 from app.services.skill_gap import analyze_skill_gaps
 from app.services.semantic_matcher import calculate_semantic_similarity
+from app.services.role_recommender import recommend_roles
 
 app = FastAPI(
     title="CareerForge AI ML Service",
@@ -30,6 +31,9 @@ class JobMatchRequest(BaseModel):
 class SemanticMatchRequest(BaseModel):
     resume_text: str
     job_description: str
+    
+class RoleRecommendationRequest(BaseModel):
+    candidate_skills: list[str]
     
     
 @app.get("/")
@@ -178,3 +182,18 @@ def semantic_match(request: SemanticMatchRequest):
             2,
         ),
     }
+
+@app.post("/api/recommend-roles")
+def recommend_career_roles(
+    request: RoleRecommendationRequest,
+):
+    recommendations = recommend_roles(
+        request.candidate_skills
+    )
+
+    return {
+        "success": True,
+        "recommendations": recommendations,
+    }
+    
+ 
