@@ -34,7 +34,8 @@ def analyze_resume_against_job(
     
     # 5. Recommend suitable career roles
     career_recommendations = recommend_roles(
-    resume_skills
+       candidate_skills=resume_skills,
+       candidate_profile=resume_text,
 )
 
     return {
