@@ -1,11 +1,12 @@
-from fastapi import FastAPI, File, UploadFile
+from fastapi import FastAPI, File, UploadFile, Form
 from pydantic import BaseModel
 import tempfile
 import os
 
 from app.services.skill_extractor import extract_skills
 from app.services.pdf_extractor import extract_text_from_pdf
-
+from app.services.job_matcher import calculate_match_score
+from app.services.resume_analyzer import analyze_resume_against_job
 
 app = FastAPI(
     title="CareerForge AI ML Service",
@@ -16,6 +17,13 @@ app = FastAPI(
 
 class SkillExtractionRequest(BaseModel):
     text: str
+    
+
+class JobMatchRequest(BaseModel):
+    resume_text: str
+    job_description: str
+    resume_skills: list[str]
+    required_skills: list[str]
 
 
 @app.get("/")
@@ -76,6 +84,65 @@ async def analyze_resume(file: UploadFile = File(...)):
             "text_length": len(extracted_text),
             "skills": skills,
             "skill_count": len(skills),
+        }
+
+    finally:
+        os.unlink(temporary_file.name)
+        
+@app.post("/api/match-job")
+def match_job(request: JobMatchRequest):
+    result = calculate_match_score(
+        resume_text=request.resume_text,
+        job_description=request.job_description,
+        resume_skills=request.resume_skills,
+        required_skills=request.required_skills,
+    )
+
+    return {
+        "success": True,
+        **result,
+    }
+    
+@app.post("/api/analyze-resume-job")
+async def analyze_resume_job(
+    file: UploadFile = File(...),
+    job_description: str = Form(...),
+    required_skills: str = Form(...),
+):
+    if not file.filename.lower().endswith(".pdf"):
+        return {
+            "success": False,
+            "message": "Only PDF files are supported.",
+        }
+
+    file_content = await file.read()
+
+    temporary_file = tempfile.NamedTemporaryFile(
+        delete=False,
+        suffix=".pdf",
+    )
+
+    try:
+        temporary_file.write(file_content)
+        temporary_file.close()
+
+        skills = [
+            skill.strip()
+            for skill in required_skills.split(",")
+            if skill.strip()
+        ]
+
+        result = analyze_resume_against_job(
+            pdf_path=temporary_file.name,
+            job_description=job_description,
+            required_skills=skills,
+        )
+
+        return {
+            "success": True,
+            "filename": file.filename,
+            "job_required_skills": skills,
+            **result,
         }
 
     finally:
