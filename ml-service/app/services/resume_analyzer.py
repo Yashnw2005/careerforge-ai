@@ -1,6 +1,7 @@
 from app.services.pdf_extractor import extract_text_from_pdf
 from app.services.skill_extractor import extract_skills
 from app.services.job_matcher import calculate_match_score
+from app.services.skill_gap import analyze_skill_gaps
 
 
 def analyze_resume_against_job(
@@ -9,13 +10,13 @@ def analyze_resume_against_job(
     required_skills: list[str],
 ) -> dict:
     """
-    Analyze a resume PDF against a job description.
+    Run the complete CareerForge resume intelligence pipeline.
     """
 
-    # 1. Extract resume text from PDF
+    # 1. Extract resume text
     resume_text = extract_text_from_pdf(pdf_path)
 
-    # 2. Extract skills from resume
+    # 2. Extract candidate skills
     resume_skills = extract_skills(resume_text)
 
     # 3. Calculate resume-job match
@@ -26,8 +27,28 @@ def analyze_resume_against_job(
         required_skills=required_skills,
     )
 
+    # 4. Analyze missing skills
+    skill_gap = analyze_skill_gaps(
+        match_result["missing_skills"]
+    )
+
     return {
         "resume_text_length": len(resume_text),
         "resume_skills": resume_skills,
-        **match_result,
+        "overall_match_percentage": match_result[
+            "overall_match_percentage"
+        ],
+        "text_similarity": match_result[
+            "text_similarity"
+        ],
+        "skill_match_percentage": match_result[
+            "skill_match_percentage"
+        ],
+        "matched_skills": match_result[
+            "matched_skills"
+        ],
+        "missing_skills": match_result[
+            "missing_skills"
+        ],
+        "skill_gap_analysis": skill_gap,
     }

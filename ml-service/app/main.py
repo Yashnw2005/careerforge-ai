@@ -7,6 +7,7 @@ from app.services.skill_extractor import extract_skills
 from app.services.pdf_extractor import extract_text_from_pdf
 from app.services.job_matcher import calculate_match_score
 from app.services.resume_analyzer import analyze_resume_against_job
+from app.services.skill_gap import analyze_skill_gaps
 
 app = FastAPI(
     title="CareerForge AI ML Service",
@@ -147,3 +148,12 @@ async def analyze_resume_job(
 
     finally:
         os.unlink(temporary_file.name)
+
+@app.post("/api/analyze-skill-gap")
+def analyze_skill_gap(skills: list[str]):
+    recommendations = analyze_skill_gaps(skills)
+
+    return {
+        "success": True,
+        "skill_gaps": recommendations,
+    }
