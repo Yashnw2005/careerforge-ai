@@ -1,0 +1,104 @@
+[
+  {
+    "candidate_id": "candidate_001",
+    "skills": [
+      "javascript",
+      "typescript",
+      "react",
+      "node.js",
+      "express",
+      "mongodb",
+      "sql",
+      "git",
+      "github",
+      "docker"
+    ],
+    "expected_roles": [
+      "Full Stack Developer",
+      "Frontend Developer",
+      "Backend Developer"
+    ]
+  },
+  {
+    "candidate_id": "candidate_002",
+    "skills": [
+      "python",
+      "fastapi",
+      "django",
+      "postgresql",
+      "sql",
+      "docker",
+      "git",
+      "github"
+    ],
+    "expected_roles": [
+      "Backend Developer",
+      "Full Stack Developer"
+    ]
+  },
+  {
+    "candidate_id": "candidate_003",
+    "skills": [
+      "aws",
+      "docker",
+      "kubernetes",
+      "linux",
+      "git",
+      "github"
+    ],
+    "expected_roles": [
+      "DevOps Engineer",
+      "Cloud Engineer"
+    ]
+  },
+  {
+    "candidate_id": "candidate_004",
+    "skills": [
+      "python",
+      "machine learning",
+      "pandas",
+      "numpy",
+      "scikit-learn",
+      "tensorflow",
+      "git"
+    ],
+    "expected_roles": [
+      "Machine Learning Engineer",
+      "Data Scientist",
+      "AI Engineer"
+    ]
+  },
+  {
+    "candidate_id": "candidate_005",
+    "skills": [
+      "python",
+      "sql",
+      "pandas",
+      "numpy",
+      "statistics",
+      "data visualization",
+      "scikit-learn"
+    ],
+    "expected_roles": [
+      "Data Scientist",
+      "Machine Learning Engineer"
+    ]
+  },
+  {
+    "candidate_id": "candidate_006",
+    "skills": [
+      "python",
+      "machine learning",
+      "deep learning",
+      "natural language processing",
+      "pytorch",
+      "tensorflow",
+      "docker",
+      "git"
+    ],
+    "expected_roles": [
+      "AI Engineer",
+      "Machine Learning Engineer"
+    ]
+  }
+]
