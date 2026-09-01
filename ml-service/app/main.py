@@ -34,6 +34,7 @@ class SemanticMatchRequest(BaseModel):
     
 class RoleRecommendationRequest(BaseModel):
     candidate_skills: list[str]
+    candidate_profile: str = ""
     
     
 @app.get("/")
@@ -188,7 +189,8 @@ def recommend_career_roles(
     request: RoleRecommendationRequest,
 ):
     recommendations = recommend_roles(
-        request.candidate_skills
+        candidate_skills=request.candidate_skills,
+        candidate_profile=request.candidate_profile,
     )
 
     return {

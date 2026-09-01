@@ -1,13 +1,20 @@
 import json
 from pathlib import Path
 from typing import Any
+
 from app.services.semantic_matcher import calculate_semantic_similarity
+
 
 DATA_FILE = (
     Path(__file__).resolve().parent.parent
     / "data"
     / "role_skills.json"
 )
+
+
+# Recommendation weighting configuration.
+SKILL_WEIGHT = 0.70
+SEMANTIC_WEIGHT = 0.30
 
 
 def load_role_database() -> dict[str, dict[str, Any]]:
@@ -21,7 +28,7 @@ def load_role_database() -> dict[str, dict[str, Any]]:
         encoding="utf-8",
     ) as file:
         return json.load(file)
-    
+
 
 def calculate_role_match(
     candidate_skills: list[str],
@@ -75,6 +82,7 @@ def calculate_role_match(
         "total_weight": total_weight,
     }
 
+
 def calculate_role_semantic_match(
     candidate_profile: str,
     role_description: str,
@@ -88,7 +96,8 @@ def calculate_role_semantic_match(
         candidate_profile,
         role_description,
     )
-    
+
+
 def recommend_roles(
     candidate_skills: list[str],
     candidate_profile: str = "",
@@ -129,8 +138,11 @@ def recommend_roles(
 
         if candidate_profile.strip():
             final_score = (
-                (skill_score * 0.70)
-                + (semantic_match_percentage * 0.30)
+                (skill_score * SKILL_WEIGHT)
+                + (
+                    semantic_match_percentage
+                    * SEMANTIC_WEIGHT
+                )
             )
         else:
             final_score = skill_score

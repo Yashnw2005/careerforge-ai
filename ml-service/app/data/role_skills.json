@@ -2,6 +2,13 @@
   "Full Stack Developer": {
     "category": "Software Development",
     "description": "Develops complete web applications across the frontend and backend, building user interfaces, APIs, server-side services, databases, and deployment workflows.",
+    "core_skills": [
+      "javascript",
+      "typescript",
+      "react",
+      "node.js",
+      "express"
+    ],
     "skills": {
       "javascript": 3,
       "typescript": 2,
@@ -19,6 +26,15 @@
   "Backend Developer": {
     "category": "Software Development",
     "description": "Designs and develops server-side applications, REST APIs, backend services, database integrations, authentication systems, and scalable application logic.",
+    "core_skills": [
+      "python",
+      "java",
+      "node.js",
+      "express",
+      "fastapi",
+      "django",
+      "sql"
+    ],
     "skills": {
       "python": 3,
       "java": 3,
@@ -38,6 +54,11 @@
   "Frontend Developer": {
     "category": "Software Development",
     "description": "Builds responsive and interactive web interfaces using modern frontend technologies, component-based frameworks, JavaScript, and web development tools.",
+    "core_skills": [
+      "javascript",
+      "typescript",
+      "react"
+    ],
     "skills": {
       "javascript": 3,
       "typescript": 3,
@@ -50,6 +71,14 @@
   "DevOps Engineer": {
     "category": "Cloud & DevOps",
     "description": "Automates software delivery and infrastructure operations, manages containers and orchestration platforms, maintains cloud environments, and builds reliable deployment pipelines.",
+    "core_skills": [
+      "linux",
+      "docker",
+      "kubernetes",
+      "aws",
+      "azure",
+      "google cloud"
+    ],
     "skills": {
       "linux": 3,
       "docker": 3,
@@ -64,7 +93,15 @@
 
   "Cloud Engineer": {
     "category": "Cloud & DevOps",
-    "description": "Designs, deploys, and manages cloud infrastructure and scalable applications using cloud platforms, networking, containers, infrastructure tools, and automation.",
+    "description": "Designs, deploys, and manages cloud infrastructure and scalable applications using cloud platforms, networking, containers, infrastructure tools,and automation.",
+    "core_skills": [
+      "linux",
+      "aws",
+      "azure",
+      "google cloud",
+      "docker",
+      "kubernetes"
+    ],
     "skills": {
       "linux": 3,
       "aws": 3,
@@ -79,6 +116,13 @@
   "Machine Learning Engineer": {
     "category": "Artificial Intelligence",
     "description": "Builds and deploys machine learning systems, develops predictive models, processes datasets, evaluates models, and integrates machine learning solutions into production applications.",
+    "core_skills": [
+      "python",
+      "machine learning",
+      "scikit-learn",
+      "tensorflow",
+      "pytorch"
+    ],
     "skills": {
       "python": 3,
       "machine learning": 3,
@@ -95,6 +139,13 @@
   "Data Scientist": {
     "category": "Data Science",
     "description": "Analyzes structured and unstructured data, performs statistical analysis, builds machine learning models, creates visualizations, and generates insights to support decisions.",
+    "core_skills": [
+      "python",
+      "sql",
+      "pandas",
+      "statistics",
+      "data visualization"
+    ],
     "skills": {
       "python": 3,
       "sql": 3,
@@ -110,6 +161,13 @@
   "AI Engineer": {
     "category": "Artificial Intelligence",
     "description": "Develops artificial intelligence applications using machine learning and deep learning techniques, including natural language processing, model integration, deployment, and intelligent automation.",
+    "core_skills": [
+      "python",
+      "machine learning",
+      "deep learning",
+      "natural language processing",
+      "pytorch"
+    ],
     "skills": {
       "python": 3,
       "machine learning": 3,
