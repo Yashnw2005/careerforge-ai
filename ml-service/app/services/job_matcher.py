@@ -1,5 +1,6 @@
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+
 from app.services.semantic_matcher import calculate_semantic_similarity
 
 
@@ -12,13 +13,18 @@ def calculate_text_similarity(
     using TF-IDF and cosine similarity.
     """
 
-    documents = [resume_text, job_description]
+    documents = [
+        resume_text,
+        job_description,
+    ]
 
     vectorizer = TfidfVectorizer(
         stop_words="english"
     )
 
-    tfidf_matrix = vectorizer.fit_transform(documents)
+    tfidf_matrix = vectorizer.fit_transform(
+        documents
+    )
 
     similarity = cosine_similarity(
         tfidf_matrix[0:1],
@@ -37,12 +43,12 @@ def calculate_skill_match(
     """
 
     resume_skill_set = {
-        skill.lower()
+        skill.lower().strip()
         for skill in resume_skills
     }
 
     required_skill_set = {
-        skill.lower()
+        skill.lower().strip()
         for skill in required_skills
     }
 
@@ -70,6 +76,7 @@ def calculate_skill_match(
             2,
         ),
     }
+
 
 def calculate_match_score(
     resume_text: str,
@@ -114,17 +121,17 @@ def calculate_match_score(
     )
 
     return {
-    "overall_match_percentage": round(
-        overall_score,
-        2,
-    ),
-    "text_similarity": text_similarity,
-    "semantic_similarity": semantic_similarity,
-    "skill_match_percentage": skill_score,
-    "matched_skills": skill_analysis[
-        "matched_skills"
-    ],
-    "missing_skills": skill_analysis[
-        "missing_skills"
-    ],
-}
+        "overall_match_percentage": round(
+            overall_score,
+            2,
+        ),
+        "text_similarity": text_similarity,
+        "semantic_similarity": semantic_similarity,
+        "skill_match_percentage": skill_score,
+        "matched_skills": skill_analysis[
+            "matched_skills"
+        ],
+        "missing_skills": skill_analysis[
+            "missing_skills"
+        ],
+    }

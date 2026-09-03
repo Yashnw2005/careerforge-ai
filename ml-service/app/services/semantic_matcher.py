@@ -16,8 +16,9 @@ def calculate_semantic_similarity(
     """
 
     embeddings = model.encode(
-        [resume_text, job_description]
-    )
+    [resume_text, job_description],
+    normalize_embeddings=True,
+)
 
     similarity = cosine_similarity(
         [embeddings[0]],

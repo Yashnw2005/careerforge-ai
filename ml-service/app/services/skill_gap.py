@@ -4,13 +4,16 @@ from typing import Literal
 SkillPriority = Literal["high", "medium", "low"]
 
 
-# Initial skill metadata.
-# We will expand this as CareerForge grows.
+# Skill metadata used to generate explainable
+# career-learning recommendations.
 SKILL_METADATA = {
     "python": {
         "priority": "high",
         "category": "programming",
-        "reason": "Python is widely used in software development, data science, and AI.",
+        "reason": (
+            "Python is widely used in software development, "
+            "data science, and AI."
+        ),
         "prerequisites": [],
         "learning_topics": [
             "Python fundamentals",
@@ -21,7 +24,10 @@ SKILL_METADATA = {
     "docker": {
         "priority": "high",
         "category": "devops",
-        "reason": "Docker is commonly required for containerized application development.",
+        "reason": (
+            "Docker is commonly required for "
+            "containerized application development."
+        ),
         "prerequisites": [],
         "learning_topics": [
             "Images and containers",
@@ -32,7 +38,10 @@ SKILL_METADATA = {
     "kubernetes": {
         "priority": "high",
         "category": "devops",
-        "reason": "Kubernetes is required for container orchestration and scalable deployments.",
+        "reason": (
+            "Kubernetes is required for container "
+            "orchestration and scalable deployments."
+        ),
         "prerequisites": [
             "docker",
         ],
@@ -47,7 +56,10 @@ SKILL_METADATA = {
     "aws": {
         "priority": "high",
         "category": "cloud",
-        "reason": "AWS skills are frequently required for cloud-based application deployment.",
+        "reason": (
+            "AWS skills are frequently required for "
+            "cloud-based application deployment."
+        ),
         "prerequisites": [
             "docker",
         ],
@@ -61,7 +73,10 @@ SKILL_METADATA = {
     "sql": {
         "priority": "medium",
         "category": "database",
-        "reason": "SQL is important for querying and managing relational databases.",
+        "reason": (
+            "SQL is important for querying and "
+            "managing relational databases."
+        ),
         "prerequisites": [],
         "learning_topics": [
             "SELECT queries",
@@ -73,7 +88,10 @@ SKILL_METADATA = {
     "react": {
         "priority": "medium",
         "category": "frontend",
-        "reason": "React is widely used for modern web application interfaces.",
+        "reason": (
+            "React is widely used for modern "
+            "web application interfaces."
+        ),
         "prerequisites": [
             "javascript",
         ],
@@ -100,7 +118,9 @@ def analyze_skill_gaps(
     for skill in missing_skills:
         normalized_skill = skill.lower().strip()
 
-        metadata = SKILL_METADATA.get(normalized_skill)
+        metadata = SKILL_METADATA.get(
+            normalized_skill
+        )
 
         if metadata:
             recommendations.append(
@@ -109,8 +129,12 @@ def analyze_skill_gaps(
                     "priority": metadata["priority"],
                     "category": metadata["category"],
                     "reason": metadata["reason"],
-                    "prerequisites": metadata["prerequisites"],
-                    "learning_topics": metadata["learning_topics"],
+                    "prerequisites": metadata[
+                        "prerequisites"
+                    ],
+                    "learning_topics": metadata[
+                        "learning_topics"
+                    ],
                 }
             )
         else:
@@ -119,11 +143,17 @@ def analyze_skill_gaps(
                     "skill": normalized_skill,
                     "priority": "medium",
                     "category": "general",
-                    "reason": "This skill is listed as required by the target role.",
+                    "reason": (
+                        "This skill is listed as required "
+                        "by the target role."
+                    ),
                     "prerequisites": [],
                     "learning_topics": [
                         f"{normalized_skill} fundamentals",
-                        f"Practical {normalized_skill} projects",
+                        (
+                            f"Practical "
+                            f"{normalized_skill} projects"
+                        ),
                     ],
                 }
             )
@@ -135,7 +165,9 @@ def analyze_skill_gaps(
     }
 
     recommendations.sort(
-        key=lambda item: priority_order[item["priority"]]
+        key=lambda item: priority_order[
+            item["priority"]
+        ]
     )
 
     return recommendations
