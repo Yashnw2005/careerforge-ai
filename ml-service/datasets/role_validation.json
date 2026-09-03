@@ -1,0 +1,257 @@
+[
+  {
+    "candidate_id": "validation_001",
+    "skills": [
+      "javascript",
+      "typescript",
+      "react",
+      "node.js",
+      "express",
+      "mongodb",
+      "git"
+    ],
+    "profile": "Builds modern web applications using React and TypeScript on the frontend and Node.js and Express on the backend. Has experience with MongoDB, APIs, Git, and complete application development.",
+    "expected_roles": {
+      "Full Stack Developer": 3,
+      "Frontend Developer": 2,
+      "Backend Developer": 2
+    }
+  },
+  {
+    "candidate_id": "validation_002",
+    "skills": [
+      "python",
+      "fastapi",
+      "django",
+      "sql",
+      "postgresql",
+      "git",
+      "docker"
+    ],
+    "profile": "Develops backend services and REST APIs using Python, FastAPI, and Django. Works with SQL and PostgreSQL databases and uses Docker for application deployment.",
+    "expected_roles": {
+      "Backend Developer": 3,
+      "Full Stack Developer": 1
+    }
+  },
+  {
+    "candidate_id": "validation_003",
+    "skills": [
+      "linux",
+      "docker",
+      "kubernetes",
+      "aws",
+      "git",
+      "github"
+    ],
+    "profile": "Automates software delivery using Linux, Docker, Kubernetes, and AWS. Builds containerized deployment pipelines and manages cloud infrastructure and application operations.",
+    "expected_roles": {
+      "DevOps Engineer": 3,
+      "Cloud Engineer": 2
+    }
+  },
+  {
+    "candidate_id": "validation_004",
+    "skills": [
+      "aws",
+      "docker",
+      "kubernetes",
+      "linux",
+      "git"
+    ],
+    "profile": "Deploys scalable applications on AWS using containers and Kubernetes. Comfortable with Linux environments and cloud deployment automation.",
+    "expected_roles": {
+      "Cloud Engineer": 3,
+      "DevOps Engineer": 2
+    }
+  },
+  {
+    "candidate_id": "validation_005",
+    "skills": [
+      "python",
+      "pandas",
+      "numpy",
+      "scikit-learn",
+      "machine learning",
+      "statistics",
+      "sql"
+    ],
+    "profile": "Analyzes datasets using Python, Pandas, NumPy, SQL, and statistics. Builds machine learning models with Scikit-learn and communicates data-driven insights.",
+    "expected_roles": {
+      "Data Scientist": 3,
+      "Machine Learning Engineer": 2
+    }
+  },
+  {
+    "candidate_id": "validation_006",
+    "skills": [
+      "python",
+      "machine learning",
+      "pytorch",
+      "tensorflow",
+      "docker",
+      "git"
+    ],
+    "profile": "Develops and deploys machine learning systems using Python, PyTorch, and TensorFlow. Works on model development, evaluation, production integration, and containerized deployment.",
+    "expected_roles": {
+      "Machine Learning Engineer": 3,
+      "AI Engineer": 2
+    }
+  },
+  {
+    "candidate_id": "validation_007",
+    "skills": [
+      "python",
+      "machine learning",
+      "deep learning",
+      "natural language processing",
+      "pytorch"
+    ],
+    "profile": "Develops intelligent applications using deep learning and natural language processing. Builds AI models with Python and PyTorch and integrates machine learning capabilities into applications.",
+    "expected_roles": {
+      "AI Engineer": 3,
+      "Machine Learning Engineer": 2
+    }
+  },
+  {
+    "candidate_id": "validation_008",
+    "skills": [
+      "javascript",
+      "typescript",
+      "react",
+      "git"
+    ],
+    "profile": "Creates responsive and interactive user interfaces with JavaScript, TypeScript, and React. Focuses primarily on component-based frontend application development.",
+    "expected_roles": {
+      "Frontend Developer": 3,
+      "Full Stack Developer": 2
+    }
+  },
+  {
+    "candidate_id": "validation_009",
+    "skills": [
+      "python",
+      "sql",
+      "pandas",
+      "numpy",
+      "statistics"
+    ],
+    "profile": "Works with structured datasets using Python and SQL. Performs statistical analysis, data processing, exploratory analysis, and visualization-oriented data work.",
+    "expected_roles": {
+      "Data Scientist": 3,
+      "Machine Learning Engineer": 1
+    }
+  },
+  {
+    "candidate_id": "validation_010",
+    "skills": [
+      "python",
+      "fastapi",
+      "sql",
+      "docker",
+      "aws"
+    ],
+    "profile": "Builds backend APIs with Python and FastAPI, manages SQL databases, and deploys containerized services to AWS. Focuses on server-side application development.",
+    "expected_roles": {
+      "Backend Developer": 3,
+      "Cloud Engineer": 2,
+      "DevOps Engineer": 2
+    }
+  },
+  {
+    "candidate_id": "validation_011",
+    "skills": [
+      "javascript",
+      "react",
+      "node.js",
+      "express",
+      "mongodb",
+      "git",
+      "github"
+    ],
+    "profile": "Develops complete web applications with React, Node.js, Express, and MongoDB. Handles frontend interfaces, backend APIs, database integration, and version control.",
+    "expected_roles": {
+      "Full Stack Developer": 3,
+      "Backend Developer": 2,
+      "Frontend Developer": 2
+    }
+  },
+  {
+    "candidate_id": "validation_012",
+    "skills": [
+      "python",
+      "pytorch",
+      "deep learning",
+      "natural language processing",
+      "machine learning",
+      "git"
+    ],
+    "profile": "Works on natural language processing and deep learning systems using Python and PyTorch. Develops machine learning models and intelligent application components.",
+    "expected_roles": {
+      "AI Engineer": 3,
+      "Machine Learning Engineer": 2
+    }
+  },
+  {
+    "candidate_id": "validation_013",
+    "skills": [
+      "linux",
+      "docker",
+      "aws",
+      "git",
+      "github"
+    ],
+    "profile": "Works with Linux servers, Docker containers, AWS cloud services, Git, and deployment workflows. Focuses on infrastructure and reliable software delivery.",
+    "expected_roles": {
+      "Cloud Engineer": 3,
+      "DevOps Engineer": 2
+    }
+  },
+  {
+    "candidate_id": "validation_014",
+    "skills": [
+      "python",
+      "pandas",
+      "numpy",
+      "scikit-learn",
+      "machine learning",
+      "docker"
+    ],
+    "profile": "Builds machine learning solutions in Python using Pandas, NumPy, and Scikit-learn. Processes datasets, evaluates predictive models, and packages ML applications with Docker.",
+    "expected_roles": {
+      "Machine Learning Engineer": 3,
+      "Data Scientist": 2
+    }
+  },
+  {
+    "candidate_id": "validation_015",
+    "skills": [
+      "javascript",
+      "react",
+      "typescript",
+      "node.js",
+      "sql"
+    ],
+    "profile": "Develops web applications using React and TypeScript with JavaScript and Node.js. Has experience connecting applications to SQL databases and building application features across the stack.",
+    "expected_roles": {
+      "Full Stack Developer": 3,
+      "Frontend Developer": 2,
+      "Backend Developer": 2
+    }
+  },
+  {
+    "candidate_id": "validation_016",
+    "skills": [
+      "python",
+      "machine learning",
+      "pandas",
+      "sql",
+      "scikit-learn"
+    ],
+    "profile": "Uses Python, Pandas, SQL, and Scikit-learn for data analysis and machine learning. Builds predictive models and analyzes datasets to generate practical insights.",
+    "expected_roles": {
+      "Data Scientist": 3,
+      "Machine Learning Engineer": 2
+    }
+  }
+]
