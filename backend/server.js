@@ -3,8 +3,10 @@ const cors = require("cors");
 require("dotenv").config();
 
 const connectDB = require("./config/db");
+
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
+const analysisRoutes = require("./routes/analysisRoutes");
 
 const app = express();
 
@@ -21,15 +23,22 @@ app.get("/api/health", (req, res) => {
   res.status(200).json({
     success: true,
     message: "CareerForge AI backend is running",
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   });
 });
 
 // Authentication routes
 app.use("/api/auth", authRoutes);
+
+// User routes
 app.use("/api/users", userRoutes);
+
+// Resume analysis routes
+app.use("/api/analysis", analysisRoutes);
 
 // Start server
 app.listen(PORT, () => {
-  console.log(`CareerForge AI backend running on port ${PORT}`);
+  console.log(
+    `CareerForge AI backend running on port ${PORT}`
+  );
 });
