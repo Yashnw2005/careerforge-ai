@@ -1,0 +1,23 @@
+services:
+
+  ml-service:
+    build:
+      context: ./ml-service
+    container_name: careerforge-ml
+    ports:
+      - "8000:8000"
+
+  backend:
+    build:
+      context: ./backend
+    container_name: careerforge-backend
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./backend/.env
+    environment:
+      NODE_ENV: production
+      PORT: 5000
+      ML_SERVICE_URL: http://ml-service:8000
+    depends_on:
+      - ml-service
