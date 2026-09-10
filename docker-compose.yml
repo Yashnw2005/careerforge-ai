@@ -21,3 +21,14 @@ services:
       ML_SERVICE_URL: http://ml-service:8000
     depends_on:
       - ml-service
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_URL: http://localhost:5000/api
+    container_name: careerforge-frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
