@@ -1,18 +1,16 @@
 services:
 
   ml-service:
+    image: ${ML_IMAGE:-careerforge-ml}
     build:
       context: ./ml-service
     container_name: careerforge-ml
-    ports:
-      - "8000:8000"
 
   backend:
+    image: ${BACKEND_IMAGE:-careerforge-backend}
     build:
       context: ./backend
     container_name: careerforge-backend
-    ports:
-      - "5000:5000"
     env_file:
       - ./backend/.env
     environment:
@@ -23,12 +21,13 @@ services:
       - ml-service
 
   frontend:
+    image: ${FRONTEND_IMAGE:-careerforge-frontend}
     build:
       context: ./frontend
       args:
         VITE_API_URL: /api
     container_name: careerforge-frontend
     ports:
-      - "5173:80"
+      - "80:80"
     depends_on:
       - backend
